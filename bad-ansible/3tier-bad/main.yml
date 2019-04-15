@@ -31,14 +31,14 @@
   become: true
 
   tasks:
-  - name: http
+  - name: install HTTPIE
     package:
       name: httpie
       state: latest
   - name: install HAProxy
     yum:
       name=haproxy state=latest
-  - name: enable HAProxy
+  - name: enable HAProxy service
     service:
       name: haproxy
       state: started
@@ -46,7 +46,12 @@
     template:
       src: ./haproxy.cfg.j2
       dest: /etc/haproxy/haproxy.cfg
-  - name: restart HAproxy
+    notify:
+    - restart_haproxy
+       
+
+handlers:
+  - name: restart_haproxy
     service:
       name: haproxy
       state: restarted
@@ -126,7 +131,7 @@
     yum:
       name: postgresql-server
       state: latest
-  - name: enable apache at boot
+  - name: enable postgresql at boot
     service:
       name: postgresql
       enabled: yes
