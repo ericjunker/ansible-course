@@ -71,12 +71,20 @@
     file:
       path: /usr/share/tomcat/webapps/ROOT
       state: directory
+      recurse: yes
 
   - name: copy static index.html to tomcat webapps/ansible/index.html
     template:
       src: index.html.j2
       dest: /usr/share/tomcat/webapps/ROOT/index.html
       mode: 0644
+
+  - name: create ansible tomcat directory for specific app servers
+    file:
+      path: /usr/share/tomcat/webapps/ansible/
+      state: directory
+      recurse: yes
+
 
   - name: start tomcat
     service:
@@ -111,13 +119,13 @@
   become: true
   hosts: appdbs
   tasks:
-  - name: install progress
-    command: "yum install -y postgresql-server"
+#  - name: install progress
+#    command: "yum install -y postgresql-server"
 
-  #- name: install postgres
-  #  yum:
-  #    name: postgresql-server
-  #    state: latest
+  - name: install postgres
+    yum:
+      name: postgresql-server
+      state: latest
   - name: enable apache at boot
     service:
       name: postgresql
