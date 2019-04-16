@@ -35,3 +35,7 @@
 
 - name: Print domain list
   win_command: nltest /dclist:"{{ ad_domain_name }}"
+  register: output
+
+- debug:
+    msg: "{{ output }}"
