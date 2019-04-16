@@ -14,7 +14,7 @@
 - name: Set up AD domain
   win_domain:
     dns_domain_name: "{{ ad_domain_name }}"
-    ad_safe_mode_password: "{{ ansible_password }}" 
+    safe_mode_password: "{{ ad_safe_mode_password }}" 
   register: win_domain
 
 - name: Create admin user
