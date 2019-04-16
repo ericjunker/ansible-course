@@ -17,6 +17,10 @@
     safe_mode_password: "{{ ad_safe_mode_password }}" 
   register: win_domain
 
+- name: Reboot if needed after setting up domain
+  win_reboot:
+  when: win_domain.reboot_required
+
 - name: Create admin user
   win_domain_user:
     name: "admin@{{ ad_domain_name }}"
@@ -24,10 +28,6 @@
     domain_server:  "{{ ad_domain_name }}"
     groups:
       - Domain Admins
-
-- name: Reboot if needed after setting up domain
-  win_reboot:
-  when: win_domain.reboot_required
 
 - name: Print domain list
   win_command: nltest /dclist:"{{ ad_domain_name }}"
