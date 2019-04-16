@@ -23,7 +23,7 @@
 
 - name: Create admin user
   win_domain_user:
-    name: "admin@{{ ad_domain_name }}"
+    name: "{{ ad_admin_user }}"
     password: "{{ ansible_password }}"
     domain_server:  "{{ ad_domain_name }}"
     groups:
