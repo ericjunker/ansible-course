@@ -2,7 +2,7 @@
   hosts: windows
   gather_facts: false # remove later! speeds up testing
   become: true
+  vars_files: ./ssh_var.yml
   tasks:
   - import_role: 
       name: win_service_config
-      vars_from: ../../ssh_var.yml
