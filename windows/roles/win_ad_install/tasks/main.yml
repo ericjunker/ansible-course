@@ -21,6 +21,7 @@
   win_domain_user:
     name: "admin@{{ ad_domain_name }}"
     password: "{{ ansible_password }}"
+    domain_server:  "{{ ad_domain_name }}"
     groups:
       - Domain Admins
 
