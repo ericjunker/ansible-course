@@ -5,6 +5,7 @@
   win_chocolatey:
     name: "{{ package_name }}"
     state: present
+    params: "{{ parameters }}"
 
 
 - name: Autostart and start SSH service
