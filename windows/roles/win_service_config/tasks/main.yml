@@ -4,7 +4,7 @@
 - name: Install SSH with Choclatey
   win_chocolatey:
     name: "{{ package_name }}"
-    state: reinstalled
+    state: present
     params: "{{ parameters }}"
 
 
