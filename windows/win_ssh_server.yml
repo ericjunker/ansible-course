@@ -5,3 +5,4 @@
   tasks:
   - import_role: 
       name: win_service_config
+      vars_from: ./ssh_var.yml

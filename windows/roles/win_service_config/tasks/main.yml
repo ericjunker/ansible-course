@@ -1,3 +1,14 @@
 ---
 # tasks file for win_service_config
 
+- name: Install SSH with Choclatey
+  win_chocolatey:
+    name: "{{ package_name }}"
+    state: present
+
+
+- name: Autostart and start SSH service
+  win_service:
+    name: "{{ service_name }}"
+    start_mode: auto
+    state: started
