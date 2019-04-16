@@ -119,27 +119,4 @@
   become: true
   hosts: appdbs
   tasks:
-
-  - name: install postgres
-    yum:
-      name: postgresql-server
-      state: latest
-  - name: enable postgresql at boot
-    service:
-      name: postgresql
-      enabled: yes
-
-  - name: Check if PGSQL DB exists
-    stat:
-      path: "/var/lib/pgsql/data/PG_VERSION"
-    register: pgdata_dir_version
-
-  - name: Initialize DB if one does not exist already
-    command: postgresql-setup initdb
-    when: not pgdata_dir_version.stat.exists  
-
-  - name: start postgres
-    service:
-      name: postgresql.service
-      enabled: yes
-
+  - include_tasks: postgres.yml
