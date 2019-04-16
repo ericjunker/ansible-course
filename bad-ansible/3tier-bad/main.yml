@@ -18,7 +18,8 @@
   gather_facts: false # remove later! speeds up testing
   become: true
   tasks:
-  - include_tasks: global-config.yml
+  - import_role: 
+      name: repo-config
 
 - name: deploy haproxy
   hosts: frontends
