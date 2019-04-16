@@ -38,4 +38,4 @@
   register: output
 
 - debug:
-    msg: "{{ output }}"
+    msg: "{{ output.stdout }}"

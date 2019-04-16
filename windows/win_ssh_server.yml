@@ -1,0 +1,7 @@
+- name: Windows SSH setup
+  hosts: windows
+  gather_facts: false # remove later! speeds up testing
+  become: true
+  tasks:
+  - import_role: 
+      name: win_service_config
