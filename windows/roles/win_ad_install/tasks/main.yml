@@ -25,13 +25,13 @@
     msg: "User {{ ad_admin_user }} will be created at domain server {{ ad_domain_name }}"
     verbosity: 2
 
-- name: Create admin user
-  win_domain_user:
-    name: "{{ ad_admin_user }}"
-    password: "{{ ansible_password }}"
-    domain_server:  "{{ ad_domain_name }}"
-    groups:
-      - Domain Admins
+# - name: Create admin user
+#   win_domain_user:
+#     name: "{{ ad_admin_user }}"
+#     password: "{{ ansible_password }}"
+#     domain_server:  "{{ ad_domain_name }}"
+#     groups:
+#       - Domain Admins
 
 - name: Print domain list
   win_command: nltest /dclist:"{{ ad_domain_name }}"
