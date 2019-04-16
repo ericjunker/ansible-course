@@ -1,2 +1,32 @@
 ---
 # tasks file for win_ad_install
+
+- name: install AD Domain Services
+  win_feature:
+    name: AD-Domain-Services
+    state: present
+  register: win_feature
+
+- name: Reboot if needed after installing AD domain services
+  win_reboot:
+  when: win_feature.reboot_required
+
+- name: Set up AD domain
+  win_domain:
+    dns_domain_name: "{{ ad_domain_name }}"
+    ad_safe_mode_password: "{{ ansible_password }}" 
+  register: win_domain
+
+- name: Create admin user
+  win_domain_user:
+    name: "admin@{{ ad_domain_name }}"
+    password: "{{ ansible_password }}"
+    groups:
+      - Domain Admins
+
+- name: Reboot if needed after setting up domain
+  win_reboot:
+  when: win_domain.reboot_required
+
+- name: Print domain list
+  win_command: nltest /dclist:"{{ ad_domain_name }}"
