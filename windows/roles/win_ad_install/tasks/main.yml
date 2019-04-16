@@ -22,8 +22,8 @@
   when: win_domain.reboot_required
 
 - debug: 
-  msg: "User {{ ad_admin_user }} will be created at domain server {{ ad_domain_name }}"
-  verbosity: 2
+    msg: "User {{ ad_admin_user }} will be created at domain server {{ ad_domain_name }}"
+    verbosity: 2
 
 - name: Create admin user
   win_domain_user:
