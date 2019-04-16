@@ -62,56 +62,37 @@
     package:
       name: tomcat
       state: latest
+
   - name: enable tomcat at boot
     service:
       name: tomcat
       enabled: yes
-
-  - name: create ansible tomcat directory
-    file:
-      path: /usr/share/tomcat/webapps/ROOT
-      state: directory
-      recurse: yes
-
-  - name: copy static index.html to tomcat webapps/ansible/index.html
-    template:
-      src: index.html.j2
-      dest: /usr/share/tomcat/webapps/ROOT/index.html
-      mode: 0644
-
-  - name: create ansible tomcat directory for specific app servers
-    file:
-      path: /usr/share/tomcat/webapps/ansible/
-      state: directory
-      recurse: yes
-
 
   - name: start tomcat
     service:
       name: tomcat
       state: started
 
-- name: index.html on app 1
-  hosts: app1
-  gather_facts: false
-  become: true
+  - name: create ROOT tomcat directory
+    file:
+      path: /usr/share/tomcat/webapps/ROOT
+      state: directory
+      recurse: yes
 
-  tasks:
-  - name: copy static index.html to tomcat webapps/ansible/index.html
+  - name: copy static index.html to tomcat's ROOT directory
     template:
-      src: index.html.app1
-      dest: /usr/share/tomcat/webapps/ansible/index.html
+      src: index.html.j2
+      dest: /usr/share/tomcat/webapps/ROOT/index.html
+      mode: 0644
+    notify:   
+    - restart_tomcat
 
-- name: index.html on app 2
-  hosts: app2
-  gather_facts: false
-  become: true
+  handlers:
+  - name: restart_tomcat
+    service:
+      name: tomcat
+      state: restarted
 
-  tasks:
-  - name: copy static index.html to tomcat webapps/ansible/index.html
-    template:
-      src: index.html.app2
-      dest: /usr/share/tomcat/webapps/ansible/index.html
 
 - name: deploy postgres
   hosts: appdbs
